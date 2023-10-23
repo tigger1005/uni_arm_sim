@@ -1,4 +1,3 @@
-
 // Get elf file parser
 mod elf_file;
 use elf_file::ElfFile;
@@ -11,13 +10,10 @@ use callbacks::*;
 use unicorn_engine::unicorn_const::{Arch, Mode, Permission, SECOND_SCALE};
 use unicorn_engine::{RegisterARM, Unicorn};
 
-
 // Define const variables
 const STACK_BASE: u64 = 0x80100000;
 const STACK_SIZE: usize = 0x10000;
-const CODE_BASE: u64 = 0x1000000;
 const BOOT_STAGE: u64 = 0x32000000;
-const AUTH_BASE: u64 = 0xAA01000;
 
 const ARM_REG: [RegisterARM; 16] = [
     RegisterARM::R0,
@@ -39,10 +35,10 @@ const ARM_REG: [RegisterARM; 16] = [
 ];
 
 fn main() {
-    println!("Unicorn ARM simulation");
+    println!("\nUnicorn ARM simulation\n");
 
     // Open and load elf file
-    let file_data = ElfFile::new(std::path::PathBuf::from("bin/bl1.elf"));
+    let file_data = ElfFile::new(std::path::PathBuf::from("content/bin/aarch32/bl1.elf"));
 
     // Setup target
     let mut emu = Unicorn::new(Arch::ARM, Mode::LITTLE_ENDIAN | Mode::MCLASS)
@@ -68,27 +64,37 @@ fn main() {
     emu.mem_map(STACK_BASE, STACK_SIZE, Permission::READ | Permission::WRITE)
         .expect("failed to map stack page");
 
-    // Auth success / failed trigger
-    emu.mem_map(AUTH_BASE, MINIMUM_MEMORY_SIZE, Permission::WRITE)
-        .expect("failed to map mmio replacement");
-
     // Serial IO peripheral space
     emu.mmio_map(
-        0x11000000,
+        SERIAL_IO_BASE,
         MINIMUM_MEMORY_SIZE,
         Some(mmio_serial_read_callback),
         Some(mmio_serial_write_callback),
     )
     .expect("failed to map serial IO");
 
+    // Setup breakpoints
+    emu.add_code_hook(
+        file_data.flash_load_img.st_value,
+        file_data.flash_load_img.st_value + 1,
+        hook_code_breakpoint_callback,
+    )
+    .expect("failed to set flash_load_img code hook");
+
     // Load source code from elf file into simulation
-    emu.mem_write(CODE_BASE, &file_data.program)
+    emu.mem_write(file_data.program_header.p_paddr, &file_data.program)
         .expect("failed to write file data");
 
     // Clear registers
     ARM_REG
         .iter()
         .for_each(|reg| emu.reg_write(*reg, 0x00).unwrap());
+
+    // Set Stack pointer
+    emu.reg_write(RegisterARM::SP, STACK_BASE + STACK_SIZE as u64 - 4)
+        .expect("failed to set register");
+
+    emu.set_pc(file_data.program_header.p_paddr | 1).unwrap();
 
     // Run simulation
     _ = emu.emu_start(
@@ -97,4 +103,6 @@ fn main() {
         SECOND_SCALE,
         0,
     );
+
+    println!("\nUnicorn ARM simulation - Finished");
 }

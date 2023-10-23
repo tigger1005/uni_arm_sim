@@ -1,9 +1,9 @@
 use super::Unicorn;
 
 pub const SERIAL_IO_BASE: u64 = 0x11000000;
-const SERIAL_IO_BUFFER: u64 = SERIAL_IO_BASE + 0;
-const SERIAL_IO_CONFIG: u64 = SERIAL_IO_BASE + 4;
-const SERIAL_IO_CONTROL: u64 = SERIAL_IO_BASE + 8;
+const SERIAL_IO_BUFFER: u64 = 0;
+const SERIAL_IO_CONFIG: u64 = 4;
+const SERIAL_IO_CONTROL: u64 = 8;
 
 /// Callback for serial mem IO write access
 ///
@@ -16,7 +16,7 @@ pub fn mmio_serial_write_callback<D>(emu: &mut Unicorn<D>, address: u64, size: u
 
         SERIAL_IO_CONTROL => control_write(emu, size, value),
 
-        _ => print!("Invalid bus write access on address {}", address),
+        _ => println!("Invalid bus write access on address {}", address),
     }
 }
 
@@ -32,7 +32,7 @@ pub fn mmio_serial_read_callback<D>(emu: &mut Unicorn<D>, address: u64, size: us
         SERIAL_IO_CONTROL => control_read(emu, size),
 
         _ => {
-            print!("Invalid bus write access on address {}", address);
+            println!("Invalid bus write access on address {}", address);
             0
         }
     }
@@ -53,8 +53,8 @@ fn buffer_read<D>(_emu: &Unicorn<D>) -> u64 {
 /// Write to config sfr
 ///
 fn config_write<D>(_emu: &Unicorn<D>, size: usize, value: u64) {
-    print!(
-        "Write to config register size: {} value 0x{:x}",
+    println!(
+        "Write to config register size: {} value 0x{:x}\n",
         size, value
     )
 }
@@ -62,7 +62,7 @@ fn config_write<D>(_emu: &Unicorn<D>, size: usize, value: u64) {
 /// Read from config sfr
 ///
 fn config_read<D>(_emu: &Unicorn<D>, size: usize) -> u64 {
-    print!("Read from config register size: {}", size);
+    println!("Read from config register size: {}\n", size);
     0xFF112233 as u64
 }
 
@@ -70,7 +70,7 @@ fn config_read<D>(_emu: &Unicorn<D>, size: usize) -> u64 {
 ///
 fn control_write<D>(_emu: &Unicorn<D>, size: usize, value: u64) {
     print!(
-        "Write to control register size: {} value 0x{:x}",
+        "Write to control register size: {} value 0x{:x}\n",
         size, value
     )
 }
@@ -78,6 +78,6 @@ fn control_write<D>(_emu: &Unicorn<D>, size: usize, value: u64) {
 /// Read from control sfr
 ///
 fn control_read<D>(_emu: &Unicorn<D>, size: usize) -> u64 {
-    print!("Read from control register size: {}", size);
+    println!("Read from control register size: {}\n", size);
     0xEE223355 as u64
 }

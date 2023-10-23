@@ -39,7 +39,7 @@ impl ElfFile {
         // Find needed symbols
         let flash_load_img = symbols_with_names
             .iter()
-            .find(|&x| x.0 == "flash_load_img")
+            .find(|&x| x.0 == "test_done")
             .unwrap()
             .1
             .clone();
