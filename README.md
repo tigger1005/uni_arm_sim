@@ -1,5 +1,5 @@
 # uni_arm_sim
-This project is used as an template for the Unicorn Engine to simulate an ARM Cortex M processor. 
+This project is used as a template for the Unicorn Engine to simulate an ARM Cortex M processor. 
 It includes a C project in the "content" folder which is loaded into the simulation. The framework
 mocks a Serial IO peripheral. Additionaly it includes sample codings for Read & Write to the simulated Serial IO peripheral registers.
 
