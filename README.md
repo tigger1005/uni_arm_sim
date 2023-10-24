@@ -5,6 +5,9 @@ mocks a Serial IO peripheral. Additionaly it includes sample codings for Read & 
 
 ## Setup / Requirements
 * Rust toolchain
+  * Included crates:
+    * unicorn-engine
+    * elf
 * "gcc-arm-none-eabi" compiler toolchain
 * make toolchain
 
