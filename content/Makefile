@@ -47,7 +47,7 @@ bin/aarch32/bl1.bin: bin/aarch32/bl1.elf
 .PHONY: clean
 clean:
 ifeq ($(OS),Windows_NT)
-	@if not exist "bin" @rmdir "bin" /s /q
+	@if exist "bin" @rmdir "bin" /s /q
 else # ifeq ($(OS),linux)
 	rm -rf bin
 endif
