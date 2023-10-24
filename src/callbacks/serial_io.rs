@@ -47,7 +47,7 @@ fn buffer_write<D>(_emu: &Unicorn<D>, value: u8) {
 /// Read from buffer sfr
 ///
 fn buffer_read<D>(_emu: &Unicorn<D>) -> u64 {
-    0xAA as u64
+    0xAA_u64
 }
 
 /// Write to config sfr
@@ -63,13 +63,13 @@ fn config_write<D>(_emu: &Unicorn<D>, size: usize, value: u64) {
 ///
 fn config_read<D>(_emu: &Unicorn<D>, size: usize) -> u64 {
     println!("Read from config register size: {}\n", size);
-    0xFF112233 as u64
+    0xFF112233_u64
 }
 
 /// Write to control sfr
 ///
 fn control_write<D>(_emu: &Unicorn<D>, size: usize, value: u64) {
-    print!(
+    println!(
         "Write to control register size: {} value 0x{:x}\n",
         size, value
     )
@@ -79,5 +79,5 @@ fn control_write<D>(_emu: &Unicorn<D>, size: usize, value: u64) {
 ///
 fn control_read<D>(_emu: &Unicorn<D>, size: usize) -> u64 {
     println!("Read from control register size: {}\n", size);
-    0xEE223355 as u64
+    0xEE223355_u64
 }
