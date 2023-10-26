@@ -1,6 +1,3 @@
-[//]: # (SPDX-FileCopyrightText: 2023 Roland Ebrecht <roland.ebrecht@infineon.com>)
-[//]: # ()
-[//]: # (SPDX-License-Identifier: MIT)
 
 # uni_arm_sim
 This project is used as a template for the Unicorn Engine to simulate an ARM Cortex M processor. 
