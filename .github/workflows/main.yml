@@ -1,0 +1,38 @@
+# SPDX-FileCopyrightText: 2023 Stefan Hackenberg <mail@stefan-hackenberg.de>
+#
+# SPDX-License-Identifier: MIT
+
+name: build
+
+on: [push, pull_request]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  reuse:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: pip install reuse
+    - run: reuse lint
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Format
+      run: cargo fmt --verbose --check
+    - name: Clippy
+      run: cargo clippy --verbose -- --deny warnings
+    - name: Build
+      run: cargo build
+
+  # test:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: test
+  #     run: cargo test
