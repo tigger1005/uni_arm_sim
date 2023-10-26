@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 Roland Ebrecht <roland.ebrecht@infineon.com>
+//
+// SPDX-License-Identifier: MIT
+
 use super::Unicorn;
 
 pub const SERIAL_IO_BASE: u64 = 0x11000000;

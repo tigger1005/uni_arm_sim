@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 Roland Ebrecht <roland.ebrecht@infineon.com>
+//
+// SPDX-License-Identifier: MIT
+
 // Get elf file parser
 mod elf_file;
 use elf_file::ElfFile;

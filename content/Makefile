@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 Roland Ebrecht <roland.ebrecht@infineon.com>
+#
+# SPDX-License-Identifier: MIT
+
 CC = arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
 OBJDUMP = arm-none-eabi-objdump

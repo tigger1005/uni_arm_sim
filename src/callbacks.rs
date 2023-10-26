@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 Roland Ebrecht <roland.ebrecht@infineon.com>
+//
+// SPDX-License-Identifier: MIT
+
 use super::Unicorn;
 
 mod break_point;

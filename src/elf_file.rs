@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 Roland Ebrecht <roland.ebrecht@infineon.com>
+//
+// SPDX-License-Identifier: MIT
+
 use elf::endian::AnyEndian;
 use elf::file::FileHeader;
 use elf::segment::ProgramHeader;
