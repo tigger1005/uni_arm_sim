@@ -49,5 +49,5 @@ clean:
 ifeq ($(OS),Windows_NT)
 	@if exist "bin" @rmdir "bin" /s /q
 else # ifeq ($(OS),linux)
-	rm -rf bin
+	@rm -rf bin
 endif
