@@ -45,7 +45,7 @@ pub fn mmio_serial_read_callback<D>(emu: &mut Unicorn<D>, address: u64, size: us
 /// Write to buffer sfr
 ///
 fn buffer_write<D>(_emu: &Unicorn<D>, value: u8) {
-    print!("{}", value as u8 as char);
+    print!("{}", value as char);
 }
 
 /// Read from buffer sfr
