@@ -1,3 +1,5 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # uni_arm_sim
 This project is used as a template for the Unicorn Engine to simulate an ARM Cortex M processor. 
 It includes a C project in the "content" folder which is loaded into the simulation. The framework
